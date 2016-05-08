@@ -1,0 +1,120 @@
+<nav class="side-navigation grid-2">
+<h2>Categories:</h2>
+  <ul id="categories_list">
+    <li> <span class="category_left_border"><a href="/user/bookmarks">General</a></span> </li>
+    {{#each categories}}
+    <li class="new_categorie_list"> <span class="category_left_border"><a class="added_category" href="/user/bookmarks/{{name}}">{{name}}</a></span>
+      <a class="remove_cat_link" href="{{id}}">X</a>
+    </li>
+    {{/each}}
+    <form id="new_categorie_form" action="/user/bookmarks/categories/add" method="post">
+     <input type="text" id="new_categorie_input" name="new_categorie" placeholder="add new category">
+     <input type="submit" value="add">
+    </form>
+  <p id="add_category_error"></p>
+  </ul>
+</nav>
+
+
+{{#section 'jquery_categories'}}
+  <script>
+
+  $("#new_categorie_form").submit(function(evt){
+    evt.preventDefault();
+
+    var category = $("#new_categorie_input").val();
+
+    if(category.length > 0){
+      $('#add_category_error').text("");
+
+      $.ajax({
+        url:'/user/bookmarks/categories/add',
+        type: 'POST',
+        data: {'new_categorie': category},
+        cache: false,
+        error: function(xhr, error){
+          console.log('error executed');
+          if(xhr.status === 0){
+            console.log('not connected, verify network connection');
+          }else if(xhr.status == 404){
+            console.log('requested page not found 404');
+          }else if(xhr.status == 500){
+            console.log('internal server error 500');
+          }else if(error === 'timeout'){
+            console.log('time out errro');
+          }else if(error === 'abort'){
+            console.log('ajax request aborted');
+          }else{
+            console.log('uncaught error');
+          }
+        },
+        success: function(response){
+          //add the new category to the DOM
+          if(response.data == "invalid"){
+            $('#add_category_error').text("Please add a valid name for the category");
+          }else if(response.data == "error"){
+            $('#add_category_error').text("A connection error occured, please try again");
+          }else{
+            var categoryToAdd = '<li> <a href="/user/bookmarks/'+category+'">'+category+'</a></li>';
+            $('#categories_list li').last().after(categoryToAdd);
+          }
+
+          //set input value to empty after adding a category
+          $("#new_categorie_input").val("");
+
+          if($("#categories_options").length){
+            location.reload();
+          }
+
+        }
+
+    });
+
+  }else{
+    $('#add_category_error').text("Please add a valid name for the category");
+  }
+
+});
+
+
+$('.remove_cat_link').click(function(evt){
+  evt.preventDefault();
+
+  var catId = $(this).attr('href');
+  var catHrefElemement = $(this);
+  var data = {"id": catId};
+  console.log(catId);
+  jQuery.ajax({
+    url: '/user/bookmarks/categories/delete',
+    type: 'POST',
+    data: data,
+    cache: false,
+    error: function(xhr, error){
+      ajaxErrors(xhr, error);
+    },
+    success: function(response){
+      //removing the deleted category from the DOM
+      var elemn = catHrefElemement.siblings('span').text();
+      console.log(elemn);
+
+      if($("#categories_options").length){
+
+        $('#categories_options option').each(function(){
+          console.log('ipppppppaaaaaa2');
+          if($(this).val() == elemn){
+            $(this).remove();
+          }
+
+        });
+
+      }
+      catHrefElemement.closest('li').remove();
+    }
+
+  });
+
+});
+
+
+  </script>
+{{/section}}

@@ -1,0 +1,17 @@
+{{#section 'header'}}
+  {{>header}}
+{{/section}}
+
+<div class="login-page-wrapper">
+  <h1>Sign in</h1>
+
+  <form id="login-form" method="post">
+    <input type="hidden" name="_csrf" id="token" value="{{_csrfToken}}">
+    <label for="username" id="usernameLabel"></label>
+    <input type="text" name="username" id="username" maxlength="32" placeholder="Enter your username">
+    <label for="password" id="passwordLabel"></label>
+    <input type="password" name="password" id="password" placeholder="Enter your password">
+    <input type="submit" value="Login">
+  </form>
+  {{message}}
+</div>

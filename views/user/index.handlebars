@@ -1,0 +1,50 @@
+{{#section 'user_header'}}
+  {{>user_header}}
+{{/section}}
+
+<div class="dashboard-wrapper">
+
+{{>categories}}
+
+  <section class="add-bookmark-section grid-6">
+    <h1 class="add-bookmark-h1">Add bookmark</h1>
+
+    <form class="add-bookmark-form" method="post">
+      <input type="hidden" name="_csrf" id="token" value="{{_csrfToken}}">
+      <input type="text" name="url" placeholder="Paste in a URL e.g. example.com">
+      <input type="text" name="tags" placeholder="Add tags separated by comma">
+      <label id="category_options_label">
+      <select id="categories_options" name="category">
+        <option value="general">Choose category</option>
+        <option value="general">General</option>
+      </select>
+    </label>
+      <input type="submit" value="Add">
+    </form>
+
+  </section>
+
+  <section class="recent-activity-section grid-6">
+    <h2>Recent Activity</h2>
+
+    <div id="recent_activity_div">
+
+    {{#each activity}}
+      <div id="bookmark_group_div">
+        <div id="together">
+          <p class="activity_url"><a href="http://{{url}}" target="_blank">{{url}}</a> </p>
+          <p class="activity_category">{{category}}</p>
+        </div>
+        <p class="view_bookmark_dateAdded"> {{dateAdded}} </p>
+        <div class="view_bookmark_tags"> {{#each this.tags}} <p class="tags"><a href="/user/bookmarks/tags/{{this}}">{{this}}</a></p> {{/each}}</div>
+        <a class="edit_tags" href="/user/bookmarks/edit/tags/{{id}}">edit tags</a>
+      </div>
+    {{/each}}
+
+    </div>
+
+  </section>
+  {{#section 'jquery'}}
+    <script src="/js/update_category_options.js"></script>
+  {{/section}}
+</div>

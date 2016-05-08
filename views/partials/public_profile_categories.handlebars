@@ -1,0 +1,10 @@
+<nav class="side-navigation grid-2">
+<h2>Categories:</h2>
+  <ul id="categories_list">
+    <li> <span class="category_left_border"><a href="/pages/{{username}}">General</a></span> </li>
+    {{#each categories}}
+    <li class="new_categorie_list"> <span class="category_left_border"><a class="added_category" href="/pages/{{../username}}/{{name}}">{{name}}</a></span>
+    </li>
+    {{/each}}
+  </ul>
+</nav>

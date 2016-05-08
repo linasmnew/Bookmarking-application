@@ -1,0 +1,33 @@
+{{#section 'user_header'}}
+  {{>user_header}}
+{{/section}}
+
+<div class="dashboard-wrapper">
+
+  {{>categories}}
+
+  <section class="view-bookmark-section grid-6">
+    <h1 class="add-bookmark-h1">Edit bookmark</h1>
+
+    <p class="edit_tags_note"><i>(Note: Comma ',' is used to seperate individual tags)</i></p>
+
+    <div id="view_bookmark_div">
+      {{#each activity}}
+      <div class="edit_bookmark_div"><li class="edit_notice_li"><p id="edit_notice"></p></li><li id="editli"><a id="edit_bookmark" href="{{id}}">Update bookmark</a></li></div>
+      <div id="bookmark_group_div">
+        <p class="view_bookmark_url"><a href="http://{{url}}" target="_blank">{{url}}</a> </p>
+        <p class="view_bookmark_dateAdded"> {{dateAdded}} </p>
+        <div class="edit_bookmark_tags"> <input id="updated_tags" type="text" value="{{tags}}"></div>
+      </div>
+      {{/each}}
+
+    </div>
+
+    {{#section 'jquery'}}
+      <script src="/js/edit_bookmark.js"></script>
+    {{/section}}
+
+  </section>
+
+
+</div>

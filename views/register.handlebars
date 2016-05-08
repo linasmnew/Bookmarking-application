@@ -1,0 +1,31 @@
+{{#section 'header'}}
+  {{>header}}
+{{/section}}
+
+<div class="register-page-wrapper">
+  <h1>Sign up</h1>
+
+  <form id="register-form" method="POST">
+    <input type="hidden" name="_csrf" id="token" value="{{_csrfToken}}">
+    <label for="username" id="usernameLabel"></label>
+    <input type="text" name="username" id="username" maxlength="32" placeholder="Create username">
+    <label for="email" id="emailLabel"></label>
+    <input type="email" name="email" id="email" maxlength="50" placeholder="Your email address">
+    <label for="password" id="passwordLabel"></label>
+    <input type="password" name="password" id="password" placeholder="Create password">
+    <input type="submit" value="Sign up">
+  </form>
+  {{alreadyExists}}
+  {{#each registrationValidation}}
+  <p id="feedback">{{msg}}</p>
+  {{/each}}
+
+</div>
+
+{{#section 'jquery'}}
+
+<script src="/js/validation.js"></script>
+
+
+
+{{/section}}

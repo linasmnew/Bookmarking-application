@@ -1,0 +1,35 @@
+{{#section 'user_header'}}
+  {{>user_header}}
+{{/section}}
+
+<div class="dashboard-wrapper">
+
+  {{>categories}}
+
+  <section class="view-bookmark-section grid-6">
+    <h1 class="add-bookmark-h1">Search results</h1>
+
+    <li id="deleteli"><a id="delete_bookmark" href="">Delete bookmark</a></li>
+
+    <div id="view_bookmark_div">
+
+      {{#each activity}}
+      <div id="bookmark_group_div">
+        <p class="view_bookmark_url"><a href="http://{{url}}" target="_blank">{{url}}</a>  <input class="bookmark_select" type="checkbox" name="selected_task" value="{{id}}"> </p>
+        <p class="view_bookmark_dateAdded"> {{dateAdded}} </p>
+        <div class="view_bookmark_tags"> {{#each this.tags}} <p class="tags"><a href="/user/bookmarks/tags/{{this}}">{{this}}</a></p> {{/each}}</div>
+        <a class="edit_tags" href="/user/bookmarks/edit/tags/{{id}}">edit tags</a>
+      </div>
+      {{/each}}
+
+    </div>
+
+  </section>
+
+</div>
+
+
+{{#section 'jquery'}}
+  <script src="/js/load_more_bookmarks.js"></script>
+  <script src="/js/delete_bookmark.js"></script>
+{{/section}}

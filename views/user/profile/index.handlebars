@@ -1,0 +1,69 @@
+{{#section 'user_header'}}
+  {{>user_header}}
+{{/section}}
+
+<div class="dashboard-wrapper">
+
+  <nav class="side-navigation grid-2">
+  <h2>Options:</h2>
+    <ul id="categories_list">
+      <li><a href="#manage_account">Change account type</a></li>
+      <li><a href="#profile_update">Change details</a></li>
+    </ul>
+  </nav>
+
+  <section class="add-bookmark-section grid-6">
+    <div id="manage_account">
+      <h1 class="add-bookmark-h1">Manage account</h1>
+
+      <p>You can change your account to a public one. This will make your repository
+      accessible to everyone via the following url <i>siteurl/pages/yourusername</i> </p>
+
+      <ul id="account_type">
+        <li>
+          <form action="/user/profile/private" method="post">
+            <button type="submit" name="account_type" value="private">Private (default)</button>
+          </form>
+        </li>
+        <li>
+          <form action="/user/profile/public" method="post">
+            <button type="submit" name="account_type" value="public">Public</button>
+          </form>
+        </li>
+    </ul>
+
+      <p id="account_type">Current account status: <strong>{{account_type}}</strong></p>
+
+    </section>
+  </div>
+
+  <section class="recent-activity-section grid-6">
+    <div id="profile_update">
+      <h2>Profile</h2>
+
+      <form id="profile_email_form" action="/user/profile/update_email" method="post">
+        <label for="email">Update Email:</label>
+        <input type="text" id="email_input" name="email" value="{{#each user}}{{this.email}}{{/each}}">
+        <input type="submit" value="update">
+      </form>
+      <p id="email_notice"></p>
+      <div id="password_change_div">
+        <p>Change Password:</p>
+          <form id="profile_password_form" action="/user/profile/update_password" method="post">
+            <input type="text" id="oldpassword" name="oldpassword" placeholder="Enter old password">
+            <input type="text" id="newpassword" name="newpassword" placeholder="Enter new password">
+            <input type="text" id="newpassword2" name="newpassword2" placeholder="Repeat new password">
+            <input type="submit" value="update password">
+          </form>
+      </div>
+      <p id="password_notice"></p>
+
+    </section>
+  </div>
+</div>
+
+
+{{#section 'jquery'}}
+  <script src="/js/update_email.js"></script>
+  <script src="/js/update_password.js"></script>
+{{/section}}
